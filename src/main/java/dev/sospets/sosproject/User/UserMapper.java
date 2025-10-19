@@ -14,11 +14,23 @@ public class UserMapper {
         user.setPhone(userRequestDto.getPhone());
         user.setGender(userRequestDto.getGender());
         user.setAge(userRequestDto.getAge());
+        user.setCpf(userRequestDto.getCpf());
         user.setRole(userRequestDto.getRole());
-        user.setPosts(userRequestDto.getPosts());
-        user.setPostsSocialMedia(userRequestDto.getPostsSocialMedia());
-        user.setSuccessStories(userRequestDto.getSuccessStories());
         return user;
+    }
+
+    public UserResponseDto toUserResponse(User user) {
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(user.getId());
+        userResponseDto.setName(user.getName());
+        userResponseDto.setEmail(user.getEmail());
+        userResponseDto.setPhone(user.getPhone());
+        userResponseDto.setGender(user.getGender());
+        userResponseDto.setAge(user.getAge());
+        userResponseDto.setCpf(user.getCpf());
+        userResponseDto.setRole(user.getRole());
+
+        return userResponseDto;
     }
 
     public UserRequestDto map(User user) {
@@ -30,10 +42,8 @@ public class UserMapper {
         userRequestDto.setPhone(user.getPhone());
         userRequestDto.setGender(user.getGender());
         userRequestDto.setAge(user.getAge());
+        userRequestDto.setCpf(user.getCpf());
         userRequestDto.setRole(user.getRole());
-        userRequestDto.setPosts(user.getPosts());
-        userRequestDto.setPostsSocialMedia(user.getPostsSocialMedia());
-        userRequestDto.setSuccessStories(user.getSuccessStories());
         return userRequestDto;
     }
 

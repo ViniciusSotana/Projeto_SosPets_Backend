@@ -33,9 +33,6 @@ public class UserRequestDto {
     @Size(max = 11)
     private String phone;
     private Role role;
-    private List<Post> posts;
-    private List<PostSocialMedia> postsSocialMedia;
-    private List<SuccessStory> successStories;
 
 
 

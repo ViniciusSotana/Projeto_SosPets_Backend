@@ -18,14 +18,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserRequestDto>> getUsers() {
-        List<UserRequestDto> lUsers = userService.getAllUsers();
+    public ResponseEntity<List<UserResponseDto>> getUsers() {
+        List<UserResponseDto> lUsers = userService.getAllUsers();
         return ResponseEntity.ok(lUsers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserRequestDto> getUserById(@PathVariable Long id) {
-        UserRequestDto user = userService.getUserById(id);
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
+        UserResponseDto user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {
@@ -34,14 +34,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserRequestDto> addUser(@RequestBody @Valid UserRequestDto userRequestDto) {
-        UserRequestDto createdUser = userService.addUser(userRequestDto);
+    public ResponseEntity<UserResponseDto> addUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        UserResponseDto createdUser = userService.addUser(userRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserRequestDto> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDto userRequestDto) {
-        UserRequestDto updatedUser = userService.updateUser(id, userRequestDto);
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDto userRequestDto) {
+        UserResponseDto updatedUser = userService.updateUser(id, userRequestDto);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {
@@ -51,12 +51,15 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        if (userService.getUserById(id) != null) {
-            userService.deleteUser(id);
+
+        boolean wasDeleted = userService.deleteUser(id);
+
+        if (wasDeleted) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado");
         }
+
     }
 
 }
