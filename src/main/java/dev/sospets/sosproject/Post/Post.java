@@ -5,6 +5,7 @@ import dev.sospets.sosproject.Image.Image;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Post {
     @ManyToOne
     private Category category;
     private Date date;
+    @OneToMany
     private List<Image> images;
 
 

@@ -2,7 +2,6 @@ package dev.sospets.sosproject.Post;
 
 import dev.sospets.sosproject.Category.Category;
 import dev.sospets.sosproject.Image.Image;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
+public class PostRequestDto {
 
     private Long id;
     @NotBlank

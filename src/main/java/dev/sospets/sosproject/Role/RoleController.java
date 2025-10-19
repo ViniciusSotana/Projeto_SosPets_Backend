@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/roles")
 public class RoleController {
 
     private final RoleService roleService;
@@ -16,14 +17,14 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoleDto>> getRoles() {
-        List<RoleDto> lRoles = roleService.getAllRoles();
+    public ResponseEntity<List<RoleRequestDto>> getRoles() {
+        List<RoleRequestDto> lRoles = roleService.getAllRoles();
         return ResponseEntity.ok(lRoles);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
-        RoleDto role = roleService.getRoleById(id);
+    public ResponseEntity<RoleRequestDto> getRoleById(@PathVariable Long id) {
+        RoleRequestDto role = roleService.getRoleById(id);
         if (role != null) {
             return ResponseEntity.ok(role);
         } else {
@@ -32,14 +33,14 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<RoleDto> addRole(@RequestBody @Valid RoleDto roleDto) {
-        RoleDto createdRole = roleService.addRole(roleDto);
+    public ResponseEntity<RoleRequestDto> addRole(@RequestBody @Valid RoleRequestDto roleDto) {
+        RoleRequestDto createdRole = roleService.addRole(roleDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRole);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDto> updateRole(@PathVariable Long id, @RequestBody @Valid RoleDto roleDto) {
-        RoleDto updatedRole = roleService.updateRole(id, roleDto);
+    public ResponseEntity<RoleRequestDto> updateRole(@PathVariable Long id, @RequestBody @Valid RoleRequestDto roleDto) {
+        RoleRequestDto updatedRole = roleService.updateRole(id, roleDto);
         if (updatedRole != null) {
             return ResponseEntity.ok(updatedRole);
         } else {

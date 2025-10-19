@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpecialtyDto {
+public class SpecialtyRequestDto {
 
     private Long id;
     @NotBlank

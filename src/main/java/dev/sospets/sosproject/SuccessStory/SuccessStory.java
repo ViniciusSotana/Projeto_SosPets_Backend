@@ -3,6 +3,7 @@ package dev.sospets.sosproject.SuccessStory;
 import dev.sospets.sosproject.Image.Image;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class SuccessStory {
     private Date date;
     private String petName;
     private String petBreed;
+    @OneToMany
     private List<Image> images;
 
 }

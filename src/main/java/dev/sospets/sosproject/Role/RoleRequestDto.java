@@ -1,4 +1,4 @@
-package dev.sospets.sosproject.Image;
+package dev.sospets.sosproject.Role;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageDto {
+public class RoleRequestDto {
 
     private Long id;
     @NotBlank
-    private String path;
-
+    private String name;
 
 }

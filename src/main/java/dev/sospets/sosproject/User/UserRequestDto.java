@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserRequestDto {
 
     private Long id;
     @NotBlank

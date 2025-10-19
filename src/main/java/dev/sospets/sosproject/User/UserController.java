@@ -18,14 +18,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
-        List<UserDTO> lUsers = userService.getAllUsers();
+    public ResponseEntity<List<UserRequestDto>> getUsers() {
+        List<UserRequestDto> lUsers = userService.getAllUsers();
         return ResponseEntity.ok(lUsers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        UserDTO user = userService.getUserById(id);
+    public ResponseEntity<UserRequestDto> getUserById(@PathVariable Long id) {
+        UserRequestDto user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {
@@ -34,14 +34,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserDTO userDTO) {
-        UserDTO createdUser = userService.addUser(userDTO);
+    public ResponseEntity<UserRequestDto> addUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        UserRequestDto createdUser = userService.addUser(userRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) {
-        UserDTO updatedUser = userService.updateUser(id, userDTO);
+    public ResponseEntity<UserRequestDto> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDto userRequestDto) {
+        UserRequestDto updatedUser = userService.updateUser(id, userRequestDto);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {

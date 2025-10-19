@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SuccessStoryDto {
+public class SuccessStoryRequestDto {
 
     private Long id;
     @NotBlank

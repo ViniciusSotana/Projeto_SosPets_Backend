@@ -5,36 +5,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public User map(UserDTO userDTO) {
+    public User map(UserRequestDto userRequestDto) {
         User user = new User();
-        user.setId(userDTO.getId());
-        user.setName(userDTO.getName());
-        user.setPassword(userDTO.getPassword());
-        user.setEmail(userDTO.getEmail());
-        user.setPhone(userDTO.getPhone());
-        user.setGender(userDTO.getGender());
-        user.setAge(userDTO.getAge());
-        user.setRole(userDTO.getRole());
-        user.setPosts(userDTO.getPosts());
-        user.setPostsSocialMedia(userDTO.getPostsSocialMedia());
-        user.setSuccessStories(userDTO.getSuccessStories());
+        user.setId(userRequestDto.getId());
+        user.setName(userRequestDto.getName());
+        user.setPassword(userRequestDto.getPassword());
+        user.setEmail(userRequestDto.getEmail());
+        user.setPhone(userRequestDto.getPhone());
+        user.setGender(userRequestDto.getGender());
+        user.setAge(userRequestDto.getAge());
+        user.setRole(userRequestDto.getRole());
+        user.setPosts(userRequestDto.getPosts());
+        user.setPostsSocialMedia(userRequestDto.getPostsSocialMedia());
+        user.setSuccessStories(userRequestDto.getSuccessStories());
         return user;
     }
 
-    public UserDTO map(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPhone(user.getPhone());
-        userDTO.setGender(user.getGender());
-        userDTO.setAge(user.getAge());
-        userDTO.setRole(user.getRole());
-        userDTO.setPosts(user.getPosts());
-        userDTO.setPostsSocialMedia(user.getPostsSocialMedia());
-        userDTO.setSuccessStories(user.getSuccessStories());
-        return userDTO;
+    public UserRequestDto map(User user) {
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setId(user.getId());
+        userRequestDto.setName(user.getName());
+        userRequestDto.setPassword(user.getPassword());
+        userRequestDto.setEmail(user.getEmail());
+        userRequestDto.setPhone(user.getPhone());
+        userRequestDto.setGender(user.getGender());
+        userRequestDto.setAge(user.getAge());
+        userRequestDto.setRole(user.getRole());
+        userRequestDto.setPosts(user.getPosts());
+        userRequestDto.setPostsSocialMedia(user.getPostsSocialMedia());
+        userRequestDto.setSuccessStories(user.getSuccessStories());
+        return userRequestDto;
     }
 
 

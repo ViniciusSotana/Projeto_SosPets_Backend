@@ -7,6 +7,7 @@ import dev.sospets.sosproject.SuccessStory.SuccessStory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,11 @@ public class User {
     private String phone;
     @ManyToOne
     private Role role;
+    @OneToMany
     private List<Post> posts;
+    @OneToMany
     private List<PostSocialMedia> postsSocialMedia;
+    @OneToMany
     private List<SuccessStory> successStories;
 
 

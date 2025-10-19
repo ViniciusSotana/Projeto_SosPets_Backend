@@ -17,29 +17,29 @@ public class RoleService {
         this.roleMapper = roleMapper;
     }
 
-    public List<RoleDto> getAllRoles() {
+    public List<RoleRequestDto> getAllRoles() {
         List<Role> lRoles = roleRepository.findAll();
         return lRoles.stream()
                 .map(roleMapper::map)
                 .collect(Collectors.toList());
     }
 
-    public RoleDto getRoleById(Long id){
+    public RoleRequestDto getRoleById(Long id){
         Optional<Role> role = roleRepository.findById(id);
         return role.map(roleMapper::map).orElse(null);
     }
 
-    public RoleDto addRole(RoleDto roleDto){
-        Role role = roleMapper.map(roleDto);
+    public RoleRequestDto addRole(RoleRequestDto roleRequestDto){
+        Role role = roleMapper.map(roleRequestDto);
         Role savedRole = roleRepository.save(role);
         return roleMapper.map(savedRole);
     }
 
-    public RoleDto updateRole(Long id, RoleDto roleDto){
+    public RoleRequestDto updateRole(Long id, RoleRequestDto roleRequestDto){
         Optional<Role> role = roleRepository.findById(id);
         if(role.isPresent()){
             Role existentRole = role.get();
-            existentRole.setName(roleDto.getName());
+            existentRole.setName(roleRequestDto.getName());
             Role savedRole = roleRepository.save(existentRole);
             return roleMapper.map(existentRole);
         }
