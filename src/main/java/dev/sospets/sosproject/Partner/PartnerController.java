@@ -18,14 +18,14 @@ public class PartnerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PartnerRequestDto>> getPartner() {
-        List<PartnerRequestDto> lPartners = partnerService.getAllPartners();
+    public ResponseEntity<List<PartnerResponseDto>> getPartner() {
+        List<PartnerResponseDto> lPartners = partnerService.getAllPartners();
         return ResponseEntity.ok(lPartners);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PartnerRequestDto> getPartnerById(@PathVariable Long id) {
-        PartnerRequestDto partner = partnerService.getPartnerById(id);
+    public ResponseEntity<PartnerResponseDto> getPartnerById(@PathVariable Long id) {
+        PartnerResponseDto partner = partnerService.getPartnerById(id);
         if (partner != null) {
             return ResponseEntity.ok(partner);
         } else {
@@ -34,14 +34,14 @@ public class PartnerController {
     }
 
     @PostMapping
-    public ResponseEntity<PartnerRequestDto> addPartner(@RequestBody @Valid PartnerRequestDto PartnerRequestDto) {
-        PartnerRequestDto createdPartner = partnerService.addPartner(PartnerRequestDto);
+    public ResponseEntity<PartnerResponseDto> addPartner(@RequestBody @Valid PartnerRequestDto PartnerRequestDto) {
+        PartnerResponseDto createdPartner = partnerService.addPartner(PartnerRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPartner);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PartnerRequestDto> updatePartner(@PathVariable Long id, @RequestBody @Valid PartnerRequestDto PartnerRequestDto) {
-        PartnerRequestDto updatedPartner = partnerService.updatePartner(id, PartnerRequestDto);
+    public ResponseEntity<PartnerResponseDto> updatePartner(@PathVariable Long id, @RequestBody @Valid PartnerRequestDto PartnerRequestDto) {
+        PartnerResponseDto updatedPartner = partnerService.updatePartner(id, PartnerRequestDto);
         if (updatedPartner != null) {
             return ResponseEntity.ok(updatedPartner);
         } else {
@@ -58,5 +58,5 @@ public class PartnerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parceiro não encontrado");
         }
     }
-    
+
 }

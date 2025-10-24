@@ -18,25 +18,25 @@ public class PartnerService {
     }
     
     
-    public List<PartnerRequestDto> getAllPartners() {
+    public List<PartnerResponseDto> getAllPartners() {
         List<Partner> lPartners = partnerRepository.findAll();
         return lPartners.stream()
-                .map(partnerMapper::map)
+                .map(partnerMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public PartnerRequestDto getPartnerById(Long id){
+    public PartnerResponseDto getPartnerById(Long id){
         Optional<Partner> partner = partnerRepository.findById(id);
-        return partner.map(partnerMapper::map).orElse(null);
+        return partner.map(partnerMapper::toResponse).orElse(null);
     }
 
-    public PartnerRequestDto addPartner(PartnerRequestDto partnerRequestDto){
+    public PartnerResponseDto addPartner(PartnerRequestDto partnerRequestDto){
         Partner partner = partnerMapper.map(partnerRequestDto);
         Partner savedPartner = partnerRepository.save(partner);
-        return partnerMapper.map(savedPartner);
+        return partnerMapper.toResponse(savedPartner);
     }
 
-    public PartnerRequestDto updatePartner(Long id, PartnerRequestDto partnerRequestDto){
+    public PartnerResponseDto updatePartner(Long id, PartnerRequestDto partnerRequestDto){
         Optional<Partner> partner = partnerRepository.findById(id);
         if(partner.isPresent()){
             Partner existentPartner = partner.get();
@@ -47,7 +47,7 @@ public class PartnerService {
             existentPartner.setSpecialties(partnerRequestDto.getSpecialties());
             existentPartner.setSiteUrl(partnerRequestDto.getSiteUrl());
             Partner savedPartner = partnerRepository.save(existentPartner);
-            return partnerMapper.map(existentPartner);
+            return partnerMapper.toResponse(savedPartner);
         }
         return null;
     }

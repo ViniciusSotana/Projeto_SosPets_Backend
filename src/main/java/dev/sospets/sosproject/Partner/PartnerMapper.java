@@ -29,4 +29,17 @@ public class PartnerMapper {
         return partnerRequestDto;
     }
 
+    public PartnerResponseDto toResponse(Partner partner){
+        PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
+        partnerResponseDto.setId(partner.getId());
+        partnerResponseDto.setName(partner.getName());
+        partnerResponseDto.setEmail(partner.getEmail());
+        partnerResponseDto.setPhone(partner.getPhone());
+        partnerResponseDto.setAddress(partner.getAddress());
+        partnerResponseDto.setSiteUrl(partner.getSiteUrl());
+        partnerResponseDto.setSpecialties(partner.getSpecialties());
+
+        return partnerResponseDto;
+    }
+
 }
