@@ -2,7 +2,6 @@ package dev.sospets.sosproject.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.sospets.sosproject.Post.Post;
-import dev.sospets.sosproject.PostSocialMedia.PostSocialMedia;
 import dev.sospets.sosproject.Role.Role;
 import dev.sospets.sosproject.SuccessStory.SuccessStory;
 import jakarta.persistence.*;
@@ -35,9 +34,6 @@ public class User {
     @OneToMany
     @JsonIgnore
     private List<Post> posts;
-    @OneToMany
-    @JsonIgnore
-    private List<PostSocialMedia> postsSocialMedia;
     @OneToMany
     @JsonIgnore
     private List<SuccessStory> successStories;
