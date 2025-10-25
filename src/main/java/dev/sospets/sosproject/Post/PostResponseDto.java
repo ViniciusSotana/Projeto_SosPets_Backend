@@ -2,29 +2,27 @@ package dev.sospets.sosproject.Post;
 
 import dev.sospets.sosproject.Category.Category;
 import dev.sospets.sosproject.Image.Image;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @Data
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class PostResponseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String text;
-    @ManyToOne
+    @NotBlank
     private Category category;
     private Date date;
-    @OneToMany
     private List<Image> images;
 
 
