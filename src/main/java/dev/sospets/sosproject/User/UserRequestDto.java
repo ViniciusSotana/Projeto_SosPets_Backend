@@ -1,9 +1,6 @@
 package dev.sospets.sosproject.User;
 
-import dev.sospets.sosproject.Post.Post;
-import dev.sospets.sosproject.PostSocialMedia.PostSocialMedia;
 import dev.sospets.sosproject.Role.Role;
-import dev.sospets.sosproject.SuccessStory.SuccessStory;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
