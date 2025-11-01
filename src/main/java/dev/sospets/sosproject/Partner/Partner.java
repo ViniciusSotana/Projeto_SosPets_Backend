@@ -22,7 +22,13 @@ public class Partner {
     private String phone;
     private String email;
     private String siteUrl;
-    @OneToMany
+
+    @ManyToMany
+    @JoinTable(
+            name = "partner_specialty",
+            joinColumns = @JoinColumn(name = "partner_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialty_id")
+    )
     private List<Specialty> specialties;
 
 }
