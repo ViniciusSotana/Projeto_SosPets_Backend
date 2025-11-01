@@ -3,6 +3,7 @@ package dev.sospets.sosproject.Post;
 import dev.sospets.sosproject.Category.Category;
 import dev.sospets.sosproject.Image.Image;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class PostRequestDto {
     private String title;
     @NotBlank
     private String text;
-    @NotBlank
+    @NotNull
     private Category category;
     private Date date;
     private List<Image> images;

@@ -22,9 +22,10 @@ public class Post {
     private String title;
     private String text;
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
     private Date date;
-    @OneToMany
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Image> images;
 
 

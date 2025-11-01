@@ -1,5 +1,6 @@
 package dev.sospets.sosproject.Post;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,44 +18,44 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> findAll() {
-        List<Post> lPosts = postService.findAll();
-        return ResponseEntity.ok().body(lPosts);
+    public ResponseEntity<List<PostRequestDto>> getPosts() {
+        List<PostRequestDto> lPosts = postService.getAllPosts();
+        return ResponseEntity.ok(lPosts);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> findById(@PathVariable Long id) {
-        Post post = postService.findById(id);
-        if (post == null) {
+    public ResponseEntity<PostRequestDto> getPostById(@PathVariable Long id) {
+        PostRequestDto post = postService.getPostById(id);
+        if (post != null) {
+            return ResponseEntity.ok(post);
+        } else {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(post);
     }
 
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post postResponse = postService.createPost(post);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(postResponse);
+    public ResponseEntity<PostRequestDto> addPost(@RequestBody @Valid PostRequestDto postRequestDto) {
+        PostRequestDto createdPost = postService.addPost(postRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post post) {
-        Post postResponse = postService.updatePost(id, post);
-        if ( postResponse == null) {
+    public ResponseEntity<PostRequestDto> updatePost(@PathVariable Long id, @RequestBody @Valid PostRequestDto postRequestDto) {
+        PostRequestDto updatedPost = postService.updatePost(id, postRequestDto);
+        if (updatedPost != null) {
+            return ResponseEntity.ok(updatedPost);
+        } else {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(postResponse);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
-        boolean wasDeleted = postService.deletePost(id);
-
-        if (wasDeleted) {
+        if (postService.getPostById(id) != null) {
+            postService.deletePost(id);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post não encontrado");
         }
     }
-
 }

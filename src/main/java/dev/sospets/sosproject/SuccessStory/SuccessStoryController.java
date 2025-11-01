@@ -25,9 +25,9 @@ public class SuccessStoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SuccessStoryRequestDto> getSuccessStoryById(@PathVariable Long id) {
-        SuccessStoryRequestDto specialty = successStoryService.getSuccessStoryById(id);
-        if (specialty != null) {
-            return ResponseEntity.ok(specialty);
+        SuccessStoryRequestDto successStory = successStoryService.getSuccessStoryById(id);
+        if (successStory != null) {
+            return ResponseEntity.ok(successStory);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -35,8 +35,8 @@ public class SuccessStoryController {
 
     @PostMapping
     public ResponseEntity<SuccessStoryRequestDto> addSuccessStory(@RequestBody @Valid SuccessStoryRequestDto successStoryRequestDto) {
-        SuccessStoryRequestDto createdspecialty = successStoryService.addSuccessStory(successStoryRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdspecialty);
+        SuccessStoryRequestDto createdSuccessStory = successStoryService.addSuccessStory(successStoryRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSuccessStory);
     }
 
     @PutMapping("/{id}")

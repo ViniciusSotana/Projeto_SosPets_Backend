@@ -23,7 +23,8 @@ public class SuccessStory {
     private Date date;
     private String petName;
     private String petBreed;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "successStory_id")
     private List<Image> images;
 
 }
