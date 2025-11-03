@@ -2,10 +2,11 @@ package dev.sospets.sosproject.config;
 
 import dev.sospets.sosproject.Role.Role;
 import dev.sospets.sosproject.Role.RoleRepository;
-import dev.sospets.sosproject.Role.RoleService;
 import dev.sospets.sosproject.User.User;
 import dev.sospets.sosproject.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,12 +14,16 @@ public class DataInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-    private final RoleService roleService;
 
-    public DataInitializer(RoleRepository roleRepository, UserRepository userRepository, RoleService roleService) {
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public DataInitializer(RoleRepository roleRepository,
+                           UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
-        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -40,7 +45,9 @@ public class DataInitializer implements CommandLineRunner {
             user.setName("John Doe");
             user.setGender("Female");
             user.setEmail("Teste@teste.com");
-            user.setPassword("123456");
+
+            user.setPassword(passwordEncoder.encode("123456"));
+
             Role adminRole = roleRepository.findByName("ROLE_ADMIN")
                     .orElseThrow(() -> new RuntimeException("ROLE_ADMIN não encontrada"));
             user.setRole(adminRole);

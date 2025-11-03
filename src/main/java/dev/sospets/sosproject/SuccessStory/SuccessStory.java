@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -20,11 +21,12 @@ public class SuccessStory {
     private Long id;
     private String title;
     private String text;
+    @CreationTimestamp
     private Date date;
     private String petName;
     private String petBreed;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "successStory_id")
+    @JoinColumn(name = "successStory")
     private List<Image> images;
 
 }

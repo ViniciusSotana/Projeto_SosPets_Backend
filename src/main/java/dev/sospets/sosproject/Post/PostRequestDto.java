@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ public class PostRequestDto {
     private String text;
     @NotNull
     private Category category;
+    @CreationTimestamp
     private Date date;
     private List<Image> images;
 
