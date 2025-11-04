@@ -4,6 +4,7 @@ import dev.sospets.sosproject.Role.Role;
 import dev.sospets.sosproject.Role.RoleRepository;
 import dev.sospets.sosproject.Role.RoleService;
 import jakarta.persistence.ManyToOne;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +17,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserResponseDto> getAllUsers() {
@@ -38,6 +41,7 @@ public class UserService {
     public UserResponseDto addUser(UserRequestDto userRequestDto){
         User user = userMapper.map(userRequestDto);
         String defaultRoleName = "ROLE_USER";
+        user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         Role defaultRole = roleRepository.findByName(defaultRoleName)
                 .orElseThrow(() -> new RuntimeException("Erro: A Role '" + defaultRoleName + "' não foi encontrada no banco."));
         user.setRole(defaultRole);
@@ -51,7 +55,7 @@ public class UserService {
             User existentUser = user.get();
             existentUser.setName(userRequestDto.getName());
             existentUser.setEmail(userRequestDto.getEmail());
-            existentUser.setPassword(userRequestDto.getPassword());
+            existentUser.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
             existentUser.setAge(userRequestDto.getAge());
             existentUser.setCpf(userRequestDto.getCpf());
             existentUser.setPhone(userRequestDto.getPhone());
