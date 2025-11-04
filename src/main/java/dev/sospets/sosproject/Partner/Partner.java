@@ -1,0 +1,34 @@
+package dev.sospets.sosproject.Partner;
+
+import dev.sospets.sosproject.Specialty.Specialty;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Partner {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
+    private String siteUrl;
+
+    @ManyToMany
+    @JoinTable(
+            name = "partner_specialty",
+            joinColumns = @JoinColumn(name = "partner_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialty_id")
+    )
+    private List<Specialty> specialties;
+
+}
