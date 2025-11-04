@@ -44,7 +44,6 @@ public class SuccessStoryService {
             existentSuccessStory.setId(successStoryRequestDto.getId());
             existentSuccessStory.setDate(successStoryRequestDto.getDate());
             existentSuccessStory.setText(successStoryRequestDto.getText());
-            existentSuccessStory.setTitle(successStoryRequestDto.getTitle());
             existentSuccessStory.setPetBreed(successStoryRequestDto.getPetBreed());
             existentSuccessStory.setPetName(successStoryRequestDto.getPetName());
             existentSuccessStory.setOwnerName(successStoryRequestDto.getOwnerName());

@@ -11,7 +11,6 @@ public class SuccessStoryMapper {
         successStoryRequestDto.setId(successStory.getId());
         successStoryRequestDto.setDate(successStory.getDate());
         successStoryRequestDto.setText(successStory.getText());
-        successStoryRequestDto.setTitle(successStory.getTitle());
         successStoryRequestDto.setOwnerName(successStory.getOwnerName());
         successStoryRequestDto.setPetBreed(successStory.getPetBreed());
         successStoryRequestDto.setPetName(successStory.getPetName());
@@ -22,7 +21,6 @@ public class SuccessStoryMapper {
     public SuccessStory map(SuccessStoryRequestDto successStoryRequestDto){
         SuccessStory successStory = new SuccessStory();
         successStory.setId(successStoryRequestDto.getId());
-        successStory.setTitle(successStoryRequestDto.getTitle());
         successStory.setText(successStoryRequestDto.getText());
         successStory.setDate(successStoryRequestDto.getDate());
         successStory.setPetBreed(successStoryRequestDto.getPetBreed());

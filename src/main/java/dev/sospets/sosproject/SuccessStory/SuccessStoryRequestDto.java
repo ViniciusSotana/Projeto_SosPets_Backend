@@ -16,8 +16,6 @@ public class SuccessStoryRequestDto {
 
     private Long id;
     @NotBlank
-    private String title;
-    @NotBlank
     private String text;
     private Date date;
     @NotBlank
