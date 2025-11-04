@@ -24,6 +24,8 @@ public class SuccessStoryRequestDto {
     private String petName;
     @NotBlank
     private String petBreed;
+    @NotBlank
+    private String ownerName;
     private List<Image> images;
 
 

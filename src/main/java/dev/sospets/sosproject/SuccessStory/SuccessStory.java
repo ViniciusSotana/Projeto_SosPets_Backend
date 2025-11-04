@@ -25,6 +25,7 @@ public class SuccessStory {
     private Date date;
     private String petName;
     private String petBreed;
+    private String ownerName;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "successStory")
     private List<Image> images;

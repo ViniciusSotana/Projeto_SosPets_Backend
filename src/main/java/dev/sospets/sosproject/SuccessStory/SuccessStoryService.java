@@ -47,6 +47,7 @@ public class SuccessStoryService {
             existentSuccessStory.setTitle(successStoryRequestDto.getTitle());
             existentSuccessStory.setPetBreed(successStoryRequestDto.getPetBreed());
             existentSuccessStory.setPetName(successStoryRequestDto.getPetName());
+            existentSuccessStory.setOwnerName(successStoryRequestDto.getOwnerName());
 
             SuccessStory savedSuccessStory = successStoryRepository.save(existentSuccessStory);
             return successStoryMapper.map(savedSuccessStory);
