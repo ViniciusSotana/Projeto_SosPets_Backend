@@ -25,6 +25,7 @@ public class Image {
     private Post post;
     @ManyToOne
     @JoinColumn(name = "successStory_id")
+    @JsonIgnore
     private SuccessStory successStory;
 
 }
