@@ -2,9 +2,13 @@ package dev.sospets.sosproject.Post;
 
 import dev.sospets.sosproject.Category.Category;
 import dev.sospets.sosproject.Category.CategoryRepository;
+import dev.sospets.sosproject.Image.Image;
+import dev.sospets.sosproject.config.Cloudinary.CloudinaryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +20,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final CategoryRepository categoryRepository;
+    private final CloudinaryService cloudinaryService;
 
-    public PostService(PostRepository postRepository, PostMapper postMapper, CategoryRepository categoryRepository) {
+    public PostService(PostRepository postRepository, PostMapper postMapper, CategoryRepository categoryRepository, CloudinaryService cloudinaryService) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.categoryRepository = categoryRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
 
@@ -36,13 +42,25 @@ public class PostService {
         return post.map(postMapper::map).orElse(null);
     }
 
-    public PostRequestDto addPost(PostRequestDto postRequestDto){
+    public PostRequestDto addPost(PostRequestDto postRequestDto, List<MultipartFile> files){
         Post post = postMapper.map(postRequestDto);
 
         Category category = categoryRepository.findById(postRequestDto.getCategory().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Coleção não encontrada"));
         post.setCategory(category);
         category.getPosts().add(post);
+
+        if (files != null && !files.isEmpty()) {
+            List<Image> imagesList = new ArrayList<>();
+            for (MultipartFile file : files) {
+                String url = cloudinaryService.uploadFile(file);
+                Image image = new Image();
+                image.setPath(url);
+                image.setPost(post);
+                imagesList.add(image);
+            }
+            post.setImages(imagesList);
+        }
 
         Post savedPost = postRepository.save(post);
         return postMapper.map(savedPost);

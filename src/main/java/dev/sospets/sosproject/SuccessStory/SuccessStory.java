@@ -25,8 +25,7 @@ public class SuccessStory {
     private String petName;
     private String petBreed;
     private String ownerName;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "successStory")
+    @OneToMany(mappedBy = "successStory", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Image> images;
 
 }
