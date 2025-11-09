@@ -1,9 +1,13 @@
 package dev.sospets.sosproject.SuccessStory;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,10 +37,13 @@ public class SuccessStoryController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<SuccessStoryRequestDto> addSuccessStory(@RequestBody @Valid SuccessStoryRequestDto successStoryRequestDto) {
-        SuccessStoryRequestDto createdSuccessStory = successStoryService.addSuccessStory(successStoryRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSuccessStory);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public SuccessStoryRequestDto addSuccessStory(
+            @RequestPart("story") @Parameter(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)) @Valid SuccessStoryRequestDto storyDto,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+
+        return successStoryService.addSuccessStory(storyDto, files);
     }
 
     @PutMapping("/{id}")

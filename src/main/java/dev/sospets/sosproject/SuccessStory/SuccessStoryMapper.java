@@ -14,6 +14,7 @@ public class SuccessStoryMapper {
         successStoryRequestDto.setOwnerName(successStory.getOwnerName());
         successStoryRequestDto.setPetBreed(successStory.getPetBreed());
         successStoryRequestDto.setPetName(successStory.getPetName());
+        successStoryRequestDto.setImages(successStory.getImages());
 
         return successStoryRequestDto;
     }
@@ -26,6 +27,7 @@ public class SuccessStoryMapper {
         successStory.setPetBreed(successStoryRequestDto.getPetBreed());
         successStory.setPetName(successStoryRequestDto.getPetName());
         successStory.setOwnerName(successStoryRequestDto.getOwnerName());
+        successStory.setImages(successStoryRequestDto.getImages());
 
         return successStory;
     }

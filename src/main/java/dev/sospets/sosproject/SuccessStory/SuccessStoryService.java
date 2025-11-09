@@ -1,7 +1,11 @@
 package dev.sospets.sosproject.SuccessStory;
 
+import dev.sospets.sosproject.Image.Image;
+import dev.sospets.sosproject.config.Cloudinary.CloudinaryService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,10 +15,12 @@ public class SuccessStoryService {
 
     private final SuccessStoryRepository successStoryRepository;
     private final SuccessStoryMapper successStoryMapper;
+    private final CloudinaryService cloudinaryService;
 
-    public SuccessStoryService(SuccessStoryRepository successStoryRepository, SuccessStoryMapper successStoryMapper) {
+    public SuccessStoryService(SuccessStoryRepository successStoryRepository, SuccessStoryMapper successStoryMapper, CloudinaryService cloudinaryService) {
         this.successStoryRepository = successStoryRepository;
         this.successStoryMapper = successStoryMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
 
@@ -30,8 +36,24 @@ public class SuccessStoryService {
         return successStory.map(successStoryMapper::map).orElse(null);
     }
 
-    public SuccessStoryRequestDto addSuccessStory(SuccessStoryRequestDto successStoryRequestDto){
+    public SuccessStoryRequestDto addSuccessStory(SuccessStoryRequestDto successStoryRequestDto, List<MultipartFile> files) {
+
         SuccessStory successStory = successStoryMapper.map(successStoryRequestDto);
+
+        if (files != null && !files.isEmpty()) {
+            List<Image> imagesList = new ArrayList<>();
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    String url = cloudinaryService.uploadFile(file);
+                    Image image = new Image();
+                    image.setPath(url);
+                    image.setSuccessStory(successStory);
+                    imagesList.add(image);
+                }
+            }
+            successStory.setImages(imagesList);
+        }
+
         SuccessStory savedSuccessStory = successStoryRepository.save(successStory);
         return successStoryMapper.map(savedSuccessStory);
     }
