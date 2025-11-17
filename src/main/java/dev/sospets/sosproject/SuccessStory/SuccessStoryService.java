@@ -43,8 +43,6 @@ public class SuccessStoryService {
 
         SuccessStory successStory = successStoryMapper.map(successStoryRequestDto);
 
-        successStory.setDate(new Date());
-
         if (files != null && !files.isEmpty()) {
             List<Image> imagesList = new ArrayList<>();
             for (MultipartFile file : files) {
