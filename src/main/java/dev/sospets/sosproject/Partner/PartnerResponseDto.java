@@ -25,7 +25,6 @@ public class PartnerResponseDto {
     @Email
     private String email;
     private String siteUrl;
-    @JsonIgnore
     private List<Specialty> specialties;
 
 }

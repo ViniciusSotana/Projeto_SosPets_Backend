@@ -23,7 +23,7 @@ public class Partner {
     private String email;
     private String siteUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "partner_specialty",
             joinColumns = @JoinColumn(name = "partner_id"),
