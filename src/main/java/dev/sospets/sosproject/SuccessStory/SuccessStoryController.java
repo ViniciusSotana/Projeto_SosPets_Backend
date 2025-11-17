@@ -46,9 +46,14 @@ public class SuccessStoryController {
         return successStoryService.addSuccessStory(storyDto, files);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SuccessStoryRequestDto> updateSuccessStory(@PathVariable Long id, @RequestBody @Valid SuccessStoryRequestDto successStoryRequestDto) {
-        SuccessStoryRequestDto updatedSuccessStory = successStoryService.updateSuccessStory(id, successStoryRequestDto);
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SuccessStoryRequestDto> updateSuccessStory(
+            @PathVariable Long id,
+            @RequestPart("story") @Parameter(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)) @Valid SuccessStoryRequestDto successStoryRequestDto,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+
+        SuccessStoryRequestDto updatedSuccessStory = successStoryService.updateSuccessStory(id, successStoryRequestDto, files);
+
         if (updatedSuccessStory != null) {
             return ResponseEntity.ok(updatedSuccessStory);
         } else {

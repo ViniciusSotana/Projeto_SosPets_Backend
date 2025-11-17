@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,6 +45,8 @@ public class PostService {
 
     public PostRequestDto addPost(PostRequestDto postRequestDto, List<MultipartFile> files){
         Post post = postMapper.map(postRequestDto);
+
+        post.setDate(new Date());
 
         Category category = categoryRepository.findById(postRequestDto.getCategory().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Coleção não encontrada"));

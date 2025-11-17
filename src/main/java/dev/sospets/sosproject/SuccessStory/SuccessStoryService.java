@@ -2,10 +2,13 @@ package dev.sospets.sosproject.SuccessStory;
 
 import dev.sospets.sosproject.Image.Image;
 import dev.sospets.sosproject.config.Cloudinary.CloudinaryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +43,8 @@ public class SuccessStoryService {
 
         SuccessStory successStory = successStoryMapper.map(successStoryRequestDto);
 
+        successStory.setDate(new Date());
+
         if (files != null && !files.isEmpty()) {
             List<Image> imagesList = new ArrayList<>();
             for (MultipartFile file : files) {
@@ -58,22 +63,34 @@ public class SuccessStoryService {
         return successStoryMapper.map(savedSuccessStory);
     }
 
-    public SuccessStoryRequestDto updateSuccessStory(Long id, SuccessStoryRequestDto successStoryRequestDto){
-        Optional<SuccessStory> successStory = successStoryRepository.findById(id);
-        if(successStory.isPresent()){
-            SuccessStory existentSuccessStory = successStory.get();
+    public SuccessStoryRequestDto updateSuccessStory(Long id, SuccessStoryRequestDto successStoryRequestDto, List<MultipartFile> files) {
+        SuccessStory existentSuccessStory = successStoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Success Story com id " + id + " não encontrada"));
 
-            existentSuccessStory.setId(successStoryRequestDto.getId());
-            existentSuccessStory.setDate(successStoryRequestDto.getDate());
-            existentSuccessStory.setText(successStoryRequestDto.getText());
-            existentSuccessStory.setPetBreed(successStoryRequestDto.getPetBreed());
-            existentSuccessStory.setPetName(successStoryRequestDto.getPetName());
-            existentSuccessStory.setOwnerName(successStoryRequestDto.getOwnerName());
+        existentSuccessStory.setDate(successStoryRequestDto.getDate());
+        existentSuccessStory.setText(successStoryRequestDto.getText());
+        existentSuccessStory.setPetBreed(successStoryRequestDto.getPetBreed());
+        existentSuccessStory.setPetName(successStoryRequestDto.getPetName());
+        existentSuccessStory.setOwnerName(successStoryRequestDto.getOwnerName());
 
-            SuccessStory savedSuccessStory = successStoryRepository.save(existentSuccessStory);
-            return successStoryMapper.map(savedSuccessStory);
+        if (files != null && !files.isEmpty()) {
+            List<Image> imagesList = new ArrayList<>();
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    String url = cloudinaryService.uploadFile(file);
+                    Image image = new Image();
+                    image.setPath(url);
+                    image.setSuccessStory(existentSuccessStory);
+                    imagesList.add(image);
+                }
+            }
+            existentSuccessStory.setImages(imagesList);
         }
-        return null;
+
+        SuccessStory savedSuccessStory = successStoryRepository.save(existentSuccessStory);
+        return successStoryMapper.map(savedSuccessStory);
     }
 
     public void deleteSuccessStory(Long id){
