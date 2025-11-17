@@ -46,9 +46,14 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PostRequestDto> updatePost(@PathVariable Long id, @RequestBody @Valid PostRequestDto postRequestDto) {
-        PostRequestDto updatedPost = postService.updatePost(id, postRequestDto);
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PostRequestDto> updatePost(
+            @PathVariable Long id,
+            @RequestPart("post") @Parameter(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)) @Valid PostRequestDto postRequestDto,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+
+        PostRequestDto updatedPost = postService.updatePost(id, postRequestDto, files);
+
         if (updatedPost != null) {
             return ResponseEntity.ok(updatedPost);
         } else {

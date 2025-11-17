@@ -66,26 +66,38 @@ public class PostService {
         return postMapper.map(savedPost);
     }
 
-    public PostRequestDto updatePost(Long id, PostRequestDto postRequestDto){
-        Optional<Post> post = postRepository.findById(id);
-        if(post.isPresent()){
-            Post existentPost = post.get();
+    public PostRequestDto updatePost(Long id, PostRequestDto postRequestDto, List<MultipartFile> files) {
+        Post existentPost = postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Post com id " + id + " não encontrado"));
 
-            existentPost.setDate(postRequestDto.getDate());
-            existentPost.setText(postRequestDto.getText());
-            existentPost.setTitle(postRequestDto.getTitle());
+        existentPost.setTitle(postRequestDto.getTitle());
+        existentPost.setText(postRequestDto.getText());
+        existentPost.setDate(postRequestDto.getDate());
 
-            if (postRequestDto.getCategory() != null) {
-                Category category = categoryRepository.findById(postRequestDto.getCategory().getId())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Coleção com id " + postRequestDto.getCategory().getId() + " não encontrada"));
-                existentPost.setCategory(category);
-                category.getPosts().add(existentPost);
-            }
-
-            Post savedPost = postRepository.save(existentPost);
-            return postMapper.map(savedPost);
+        if (postRequestDto.getCategory() != null && postRequestDto.getCategory().getId() != null) {
+            Category category = categoryRepository.findById(postRequestDto.getCategory().getId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Categoria com id " + postRequestDto.getCategory().getId() + " não encontrada"));
+            existentPost.setCategory(category);
         }
-        return null;
+
+        if (files != null && !files.isEmpty()) {
+            List<Image> imagesList = new ArrayList<>();
+            for (MultipartFile file : files) {
+                String url = cloudinaryService.uploadFile(file);
+                Image image = new Image();
+                image.setPath(url);
+                image.setPost(existentPost);
+                imagesList.add(image);
+            }
+            existentPost.setImages(imagesList);
+        }
+
+        Post savedPost = postRepository.save(existentPost);
+        return postMapper.map(savedPost);
     }
 
     public void deletePost(Long id){
